@@ -1,0 +1,25 @@
+from datetime import datetime
+
+def add_to():
+    todo_list = []
+    while True:
+        task = input("Enter a task: ")
+        time_str = input("Enter a time (HH:MM): ")
+        
+        try:
+            time_obj = datetime.strptime(time_str, "%H:%M").time()  
+        except ValueError:
+            print("Invalid time format! Use HH:MM (e.g., 14:30).")
+            continue  
+
+        if input("Do you want to add more? (Yes/No) ").strip().lower() == "no":
+            break
+    return todo_list
+
+def print_to(todo_list):
+    sorted_list = sorted(todo_list, key=lambda x: x[1])  
+    for task, time_obj in sorted_list:
+        print(f"You need to {task.lower()} at {time_obj.strftime('%H:%M')}")
+
+todo_list = add_to()
+print_to(todo_list)
